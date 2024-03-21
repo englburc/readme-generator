@@ -54,20 +54,27 @@ const questions = [
         choices: ['MIT', 'APACHE 2.0', 'GPL 3.0', 'BSD 3', 'None'],
         required: true,
         default: 'MIT License'
+      },
+      {
+        type: 'input',
+        message: "Email:",
+        name: 'email',
+        required: true,
+        default: 'leo@gmail.com',
       }
+
 ];
 
 // function to write README file
 function writeToFile(fileName, data) {
-    fs.writeToFile(fileName, data, err =>¨{
-        if(err){
-            return console.log(err)
-        }
-        //if no error
-        console.log(fileName + `written successfully!`)
-
-    });
-};
+    try {
+        const filePath = path.join(process.cwd(), fileName);
+        fs.writeFileSync(filePath, generateMarkdown(data));
+        console.log('README.md created!');
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 // function to initialize program
 function init() {
